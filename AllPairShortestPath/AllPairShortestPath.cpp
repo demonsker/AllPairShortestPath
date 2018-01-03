@@ -4,7 +4,8 @@
 #define SIZE 8
 #define INF 99999
 
-void findAllPairShortestPath(int **,int **);
+void findAllPairShortestPath(int **, int **);
+void findPath(int **, int, int);
 void generate(int **);
 void initialize(int **, int **);
 void print(int **);
@@ -13,7 +14,7 @@ void useExampleData(int **);
 int main()
 {
 	//Data for gen
-	int **datagen, i;
+	int **datagen, i, j;
 	datagen = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
@@ -45,6 +46,11 @@ int main()
 	{
 		path[i] = (int*)malloc(SIZE * sizeof(int));
 	}
+	for (i = 0; i < SIZE; i++) {
+		for (j = 0; j < SIZE; j++) {
+			path[i][j] = j;
+		}
+	}
 
 	//copy datagen to data
 	initialize(datagen, data);
@@ -57,6 +63,9 @@ int main()
 
 	//Print AllPairShortestPath
 	print(data);
+
+	//Print Path
+	findPath(path, 1, 7);
 
 	getchar();
 	return 0;
@@ -114,7 +123,7 @@ void initialize(int **sour, int **dest)
 
 void print(int **distance)
 {
-	printf("Shortest distances between every pair of vertices: \n");
+	printf("Shortest distances\n");
 
 	for (int i = 0; i < SIZE; ++i)
 	{
@@ -150,5 +159,17 @@ void useExampleData(int **data)
 		{	
 			data[i][j] = example[i][j];
 		}
+	}
+}
+
+void findPath(int** shortestpath, int u, int v) 
+{
+	if (shortestpath[u][v] == NULL)
+		printf("[]");
+
+	printf("[%d]",u);
+	while (u != v) {
+		u = shortestpath[u][v];
+		printf("[%d]",u);
 	}
 }
