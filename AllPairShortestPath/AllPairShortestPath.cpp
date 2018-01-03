@@ -15,36 +15,37 @@ int main()
 {
 	int i, j;
 
-	//Data for gen
-	int **datagen;
-	datagen = (int**)malloc(SIZE * sizeof(int*));
+	//distance for gen
+	int **distanceGen;
+	distanceGen = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
-		datagen[i] = (int*)malloc(SIZE * sizeof(int));
+		distanceGen[i] = (int*)malloc(SIZE * sizeof(int));
 	}
 
 	//generate data
 	//generate(datagen);
-	useExampleData(datagen);
+	useExampleData(distanceGen);
 
 	//Print datagen
-	print(datagen);
+	printf("Generate Distance\n");
+	print(distanceGen);
 	
 	//start time
 	system("@echo Start %time%");
 
-	//Data for receiving from datagen
+	//Distance for receiving from distanceGen
 	//Path for collect path
-	int **data, **path;
-	data = (int**)malloc(SIZE * sizeof(int*));
+	int **distance, **path;
+	distance = (int**)malloc(SIZE * sizeof(int*));
 	path = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
-		data[i] = (int*)malloc(SIZE * sizeof(int));
+		distance[i] = (int*)malloc(SIZE * sizeof(int));
 		path[i] = (int*)malloc(SIZE * sizeof(int));
 	}
 
-	//Data for collect path
+	//Initial Path
 	for (i = 0; i < SIZE; i++) {
 		for (j = 0; j < SIZE; j++) {
 			path[i][j] = j;
@@ -52,16 +53,17 @@ int main()
 	}
 
 	//copy datagen to data
-	initialize(datagen, data);
+	initialize(distanceGen, distance);
 
 	//Find Shortest Path
-	findAllPairShortestPath(data,path);
+	findAllPairShortestPath(distance,path);
 
 	//Finishtime
 	system("@echo Finish %time%");
 
 	//Print AllPairShortestPath
-	print(data);
+	printf("Shortest Distance\n");
+	print(distance);
 
 	//Print Path
 	findPath(path, 1, 7);
@@ -122,8 +124,6 @@ void initialize(int **sour, int **dest)
 
 void print(int **distance)
 {
-	printf("Shortest distances\n");
-
 	for (int i = 0; i < SIZE; ++i)
 	{
 		for (int j = 0; j < SIZE; ++j)
