@@ -4,7 +4,7 @@
 #define SIZE 8
 #define INF 99999
 
-void findAllPairShortestPath(int **);
+void findAllPairShortestPath(int **,int **);
 void generate(int **);
 void initialize(int **, int **);
 void print(int **);
@@ -50,7 +50,7 @@ int main()
 	initialize(datagen, data);
 
 	//Find Shortest Path
-	findAllPairShortestPath(data);
+	findAllPairShortestPath(data,path);
 
 	//Finishtime
 	system("@echo Finish %time%");
@@ -62,7 +62,7 @@ int main()
 	return 0;
 }
 
-void findAllPairShortestPath(int **graph)
+void findAllPairShortestPath(int **graph,int **path)
 {
 	for (int k = 0; k < SIZE; k++)
 	{
@@ -71,7 +71,10 @@ void findAllPairShortestPath(int **graph)
 			for (int j = 0; j < SIZE; j++)
 			{
 				if (graph[i][k] + graph[k][j] < graph[i][j])
+				{
 					graph[i][j] = graph[i][k] + graph[k][j];
+					path[i][j] = path[i][k];
+				}
 			}
 		}
 	}
