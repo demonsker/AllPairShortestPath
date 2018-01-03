@@ -13,8 +13,10 @@ void useExampleData(int **);
 
 int main()
 {
+	int i, j;
+
 	//Data for gen
-	int **datagen, i, j;
+	int **datagen;
 	datagen = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
@@ -32,20 +34,17 @@ int main()
 	system("@echo Start %time%");
 
 	//Data for receiving from datagen
-	int **data;
+	//Path for collect path
+	int **data, **path;
 	data = (int**)malloc(SIZE * sizeof(int*));
-	for (i = 0; i < SIZE; i++)
-	{
-		data[i] = (int*)malloc(SIZE * sizeof(int));
-	}
-
-	//Data for collect path
-	int **path;
 	path = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
+		data[i] = (int*)malloc(SIZE * sizeof(int));
 		path[i] = (int*)malloc(SIZE * sizeof(int));
 	}
+
+	//Data for collect path
 	for (i = 0; i < SIZE; i++) {
 		for (j = 0; j < SIZE; j++) {
 			path[i][j] = j;
