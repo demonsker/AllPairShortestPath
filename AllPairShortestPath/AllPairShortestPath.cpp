@@ -4,7 +4,8 @@
 #define SIZE 8
 #define INF 99999
 
-void findAllPairShortestPath(int **);
+void findAllPairShortestPath(int **, int **);
+void findPath(int **, int, int);
 void generate(int **);
 void initialize(int **, int **);
 void print(int **);
@@ -12,49 +13,66 @@ void useExampleData(int **);
 
 int main()
 {
-	//Data for gen
-	int **datagen, i;
-	datagen = (int**)malloc(SIZE * sizeof(int*));
+	int i, j;
+
+	//distance for gen
+	int **distanceGen;
+	distanceGen = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
-		datagen[i] = (int*)malloc(SIZE * sizeof(int));
+		distanceGen[i] = (int*)malloc(SIZE * sizeof(int));
 	}
 
 	//generate data
 	//generate(datagen);
-	useExampleData(datagen);
+	useExampleData(distanceGen);
 
 	//Print datagen
-	print(datagen);
+	printf("Generate Distance\n");
+	print(distanceGen);
 	
 	//start time
 	system("@echo Start %time%");
 
-	//Data for receiving from datagen
-	int **data;
-	data = (int**)malloc(SIZE * sizeof(int*));
+	//Distance for receiving from distanceGen
+	//Path for collect path
+	int **distance, **path;
+	distance = (int**)malloc(SIZE * sizeof(int*));
+	path = (int**)malloc(SIZE * sizeof(int*));
 	for (i = 0; i < SIZE; i++)
 	{
-		data[i] = (int*)malloc(SIZE * sizeof(int));
+		distance[i] = (int*)malloc(SIZE * sizeof(int));
+		path[i] = (int*)malloc(SIZE * sizeof(int));
+	}
+
+	//Initial Path
+	for (i = 0; i < SIZE; i++) {
+		for (j = 0; j < SIZE; j++) {
+			path[i][j] = j;
+		}
 	}
 
 	//copy datagen to data
-	initialize(datagen, data);
+	initialize(distanceGen, distance);
 
 	//Find Shortest Path
-	findAllPairShortestPath(data);
+	findAllPairShortestPath(distance,path);
 
 	//Finishtime
 	system("@echo Finish %time%");
 
 	//Print AllPairShortestPath
-	print(data);
+	printf("Shortest Distance\n");
+	print(distance);
+
+	//Print Path
+	findPath(path, 1, 7);
 
 	getchar();
 	return 0;
 }
 
-void findAllPairShortestPath(int **graph)
+void findAllPairShortestPath(int **graph,int **path)
 {
 	for (int k = 0; k < SIZE; k++)
 	{
@@ -63,7 +81,10 @@ void findAllPairShortestPath(int **graph)
 			for (int j = 0; j < SIZE; j++)
 			{
 				if (graph[i][k] + graph[k][j] < graph[i][j])
+				{
 					graph[i][j] = graph[i][k] + graph[k][j];
+					path[i][j] = path[i][k];
+				}
 			}
 		}
 	}
@@ -103,8 +124,6 @@ void initialize(int **sour, int **dest)
 
 void print(int **distance)
 {
-	printf("Shortest distances between every pair of vertices: \n");
-
 	for (int i = 0; i < SIZE; ++i)
 	{
 		for (int j = 0; j < SIZE; ++j)
@@ -131,7 +150,7 @@ void useExampleData(int **data)
 		{ INF,INF,INF,8,1,INF,4,0 }
 	};
 		
-	int i, j, r;
+	int i, j;
 
 	for (i = 0; i < SIZE; i++)
 	{
@@ -139,5 +158,17 @@ void useExampleData(int **data)
 		{	
 			data[i][j] = example[i][j];
 		}
+	}
+}
+
+void findPath(int** shortestpath, int u, int v) 
+{
+	if (shortestpath[u][v] == NULL)
+		printf("[]");
+
+	printf("[%d]",u);
+	while (u != v) {
+		u = shortestpath[u][v];
+		printf("[%d]",u);
 	}
 }
