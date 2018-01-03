@@ -38,6 +38,14 @@ int main()
 		data[i] = (int*)malloc(SIZE * sizeof(int));
 	}
 
+	//Data for collect path
+	int **path;
+	path = (int**)malloc(SIZE * sizeof(int*));
+	for (i = 0; i < SIZE; i++)
+	{
+		path[i] = (int*)malloc(SIZE * sizeof(int));
+	}
+
 	//copy datagen to data
 	initialize(datagen, data);
 
@@ -131,7 +139,7 @@ void useExampleData(int **data)
 		{ INF,INF,INF,8,1,INF,4,0 }
 	};
 		
-	int i, j, r;
+	int i, j;
 
 	for (i = 0; i < SIZE; i++)
 	{
