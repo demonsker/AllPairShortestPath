@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include <stdlib.h>
+#include <time.h>
+#include <string.h>
 
-#define SIZE 8
+#define SIZE 16384
 #define INF 99999
 
 void findAllPairShortestPath(int **, int **);
@@ -12,7 +14,10 @@ void print(int **);
 void useExampleData(int **);
 
 int main()
-{
+{	
+	clock_t start1, end1, start2, end2;
+	start1 = clock();
+
 	int i, j;
 
 	//distance for gen
@@ -23,16 +28,17 @@ int main()
 		distanceGen[i] = (int*)malloc(SIZE * sizeof(int));
 	}
 
+	end1 = clock();
+
 	//generate data
-	//generate(datagen);
-	useExampleData(distanceGen);
+	generate(distanceGen);
+	//useExampleData(distanceGen);
 
 	//Print datagen
-	printf("Generate Distance\n");
-	print(distanceGen);
+	//printf("Generate Distance\n");
+	//print(distanceGen);
 	
-	//start time
-	system("@echo Start %time%");
+	start2 = clock();
 
 	//Distance for receiving from distanceGen
 	//Path for collect path
@@ -58,17 +64,33 @@ int main()
 	//Find Shortest Path
 	findAllPairShortestPath(distance,path);
 
-	//Finishtime
-	system("@echo Finish %time%");
+	end2 = clock();
 
-	//Print AllPairShortestPath
-	printf("Shortest Distance\n");
-	print(distance);
+	//Print ShortestDistance
+	//printf("Shortest Distance\n");
+	//print(distance);
+
+	//Print ShortestPath
+	//printf("Shortest Path\n");
+	//print(path);
 
 	//Print Path
-	findPath(path, 1, 7);
+	//findPath(path, 1, 7);
 
-	getchar();
+
+	float diff = ((float)(end1 - start1 + end2 - start2) / 1000000.0F) * 1000;
+	printf("%.4f\n", diff);
+
+	FILE * fp;
+	char filePath[70] = "C:\\Users\\EucliwoodX\\Desktop\\stat(SaveMode)\\Sequential\\";
+	char fileName[10];
+	sprintf(fileName, "%d.txt", SIZE);
+	strcat(filePath, fileName);
+	fp = fopen(filePath, "a");
+	fprintf(fp, "%.4f\n", diff);
+	fclose(fp);
+
+	//getchar();
 	return 0;
 }
 
@@ -139,7 +161,7 @@ void print(int **distance)
 
 void useExampleData(int **data) 
 {
-	int example[SIZE][SIZE] = {
+	int example[8][8] = {
 		{ 0,1,9,3,INF,INF,INF,INF },
 		{ 1,0,INF,1,INF,3,INF,INF },
 		{ 9,INF,0,INF,INF,3,10,INF },
