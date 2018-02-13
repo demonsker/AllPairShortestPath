@@ -3,7 +3,7 @@
 #include <time.h>
 #include <string.h>
 
-#define SIZE 2048
+#define SIZE 16384
 #define INF 99999
 
 void findAllPairShortestPath(int **, int **);
@@ -82,7 +82,7 @@ int main()
 	printf("%.4f\n", diff);
 
 	FILE * fp;
-	char filePath[70] = "C:\\Users\\EucliwoodX\\Desktop\\stat\\Sequential\\";
+	char filePath[70] = "C:\\Users\\EucliwoodX\\Desktop\\stat(SaveMode)\\Sequential\\";
 	char fileName[10];
 	sprintf(fileName, "%d.txt", SIZE);
 	strcat(filePath, fileName);
